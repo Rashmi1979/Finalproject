@@ -1,0 +1,38 @@
+---
+title: "About this project"
+author: "Rashmi Kadam"
+date: "7/28/2021"
+output: 
+  html_document:
+    theme: flatly
+    highlight: pygments
+    number_sections: false
+    self_contained: true
+    lib_dir: libs
+    fig_caption: true
+    toc: false
+    toc_float: false
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE)
+```
+
+![churn](custChurn.jpeg)
+* downloaded from https://www.displayr.com
+
+### Purpose of this App
+
+### Data and source
+
+### This App
+* About
+* Data
+* Data Exploration
+* Modeling
+
+
+
+
+
+
