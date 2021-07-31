@@ -20,16 +20,25 @@ ui <- navbarPage(
         fluidPage(
             sidebarLayout(
                 sidebarPanel(
+                    downloadButton('downloadData', 'Download'),
                     h3("Subseting dataset:"),
+        
 
-                    selectInput("InternetService", "Choose Internetsevice type", choices=c("DSL", "Fiber optic", "No")),
-                    br(),
-                    selectInput("Contract", "Choose Contract type", choices=c("Month to month", "One year")),
+                    selectInput("InternetService", "Choose Internetsevice type", choices=c("All types" ,"DSL", "Fiber optic", "No")),
+                    checkboxGroupInput("checkGroup", 
+                                       label = ("Columns to select"),
+                                       choices = colnames(churnData),
+                                       selected=c('gender','tenure','SeniorCitizen','Partner','Dependents','InternetService','MonthlyCharges','Churn'))
+        
+                ,
                     width = 3
                     
                 
                 ),
+                
+                
                 mainPanel(
+                    
                     DT::dataTableOutput("table")
                 )
             )
