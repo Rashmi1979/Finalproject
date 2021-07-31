@@ -2,12 +2,13 @@
 library(shiny)
 library(shinythemes)
 
-# Define UI for application that draws a histogram
+# Main UI page
 ui <- navbarPage(
+    
     "Project 3: Customer Churn  ",
     theme = shinytheme("flatly"),
     
-    # First Tab About
+    # Tab About
     tabPanel(
         "About",
         fluidPage(uiOutput("about")),
@@ -16,21 +17,34 @@ ui <- navbarPage(
     # Tab Data
     tabPanel(
         "Data",
-        
+        fluidPage(
+            sidebarLayout(
+                sidebarPanel(
+                    h3("Subseting dataset:"),
+
+                    selectInput("InternetService", "Choose Internetsevice type", choices=c("DSL", "Fiber optic", "No")),
+                    br(),
+                    selectInput("Contract", "Choose Contract type", choices=c("Month to month", "One year")),
+                    width = 3
+                    
+                
+                ),
+                mainPanel(
+                    DT::dataTableOutput("table")
+                )
+            )
+        )
     ),
+    #Tab - Data Exploration
     tabPanel(
         "Data Exploration",
         # App title ----
-        titlePanel(div(
-            windowTitle = "GraduatEmploymentSG",
-            img(src = "sg0.jpg", width = "100%", class = "bg"),
-            'test'
-        ))
+        fluidPage(uiOutput("dataexp"))
     ),
+    #tab Modeling
     tabPanel(
         "Modeling",
-        # App title ----
-        fluidPage(uiOutput("doc")),
+        fluidPage(uiOutput("modeling")),
     )
 )
         

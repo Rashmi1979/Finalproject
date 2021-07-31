@@ -1,7 +1,6 @@
 ---
-title: "About this project"
-author: "Rashmi Kadam"
-date: "7/28/2021"
+title: "About project"
+
 output: 
   html_document:
     theme: flatly
@@ -25,7 +24,7 @@ knitr::opts_chunk$set(warning=FALSE)
 
 ### Data and source
 
-### This App
+### Purpose of each tab
 * About
 * Data
 * Data Exploration
