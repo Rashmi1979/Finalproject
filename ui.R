@@ -1,5 +1,6 @@
 
 library(shiny)
+library(shinyjs)
 library(shinythemes)
 library(plotly)
 
@@ -70,7 +71,106 @@ ui <- navbarPage(
     #tab Modeling
     tabPanel(
         "Modeling",
-        fluidPage(uiOutput("modeling"))
+        tabsetPanel(
+          type = "tabs",
+          tabPanel(
+            "Modeling Info",
+            
+            #You should explain these three modeling approaches, the benefits of each,
+            #and the drawbacks of each. You should include some type of math type in the explanation
+            #(you???ll need to include mathJax).
+            
+            
+            withMathJax(),
+            helpText('An irrational number \\(\\sqrt{2}\\)
+           and a fraction $$1-\\frac{1}{2}$$'),
+            ),
+          tabPanel(
+            "Model Fitting",
+            fluidPage(
+              sidebarLayout(
+                sidebarPanel(
+                  useShinyjs(),  
+                  #Scrollable input
+                  h4("Select Model data"),
+                  sliderInput("trDataSize", "Train data percentage:",
+                              min = 1, max = 100, value = 70, step = 1),
+                  
+                  disabled(sliderInput("tstDataSize", "Test data percentage:",
+                              min = 1, max = 100, value = 30, step = 1)),
+                  
+                  numericInput("cv", "Cross Validation:", 10, min = 1, max = 100),
+                  checkboxGroupInput("predGroup", 
+                                     label = ("Select Predictors below:"),
+                                     choices = c('gender', 'SeniorCitizen', 'Partner', 'Dependents', 'tenure', 'PhoneService',
+                                                 'MultipleLines', 'InternetService', 'OnlineSecurity','OnlineBackup', 
+                                                 'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 
+                                                 'PaperlessBilling', 'PaymentMethod', 'MonthlyCharges', 'TotalCharges'),
+                                      selected= c( 'Partner', 'Dependents', 'tenure', 'PhoneService',
+                                                 'MultipleLines', 'InternetService','Contract', 
+                                                 'PaperlessBilling', 'PaymentMethod', 'TotalCharges')),
+                  
+                  
+                  width = 3
+                ),
+                mainPanel(
+                  h4("Model Inputs:"),
+                  tags$b(textOutput('trainSize')),
+                  tags$b(textOutput('cvSize')),
+                  tags$b('Predictors :'),
+                  textOutput('predictors'),
+                  hr(style="1px solid #000000"),
+                  actionButton("runModels","Run Models"),
+                  
+                  hr(style="1px solid #000000"),
+                  tags$b(("Generlized Linear Model")),
+                  textOutput("glmRMSE"),
+                  tags$div('Summary'),
+                  verbatimTextOutput("glmSummary"),
+                  
+                  hr(style="1px solid #000000"),
+                  tags$b(("Classification Tree")),
+                  textOutput("trRMSE"),
+                  tags$div('Summary'),
+                  verbatimTextOutput("trSummary"),
+                  
+                  hr(style="1px solid #000000"),
+                  tags$b(("Random Forest ")),
+                  textOutput("rfRMSE"),
+                  tags$div('Summary'),
+                  verbatimTextOutput("rfSummary")
+                  
+                  
+                  # Add busy Indicators
+                  
+                  
+                         
+                         
+                  
+               
+                )
+              )
+            )
+            
+            ),
+          
+          
+          tabPanel(
+            "Prediction",
+            fluidPage(
+              sidebarLayout(
+                sidebarPanel(
+                  selectInput("predictions", "Select Model ", choices=c("Generlized Linear Model","Classification Tree","Random Forest")),
+                  width = 3
+                ),
+                mainPanel(
+                  
+                )
+              )
+            )
+            
+          )
+        )
     )
   )
         
