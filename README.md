@@ -1,2 +1,153 @@
-# Finalproject
-Final R shiny project on churn data
+---
+title: "About project"
+---
+
+
+## The purpose of this app
+ 
+The customer churn or customer attrition refers to loss of customers or subscribers for any reason at all.
+It occurs when customers or subscibers stop doing bussiness with company or service.
+ 
+Customers in the telecom industry can choose from a variety of service providers and actively switch from one to the next. The telecommunications business has an annual churn rate of 15-25 percent in this highly competitive market.
+ 
+Individualized customer retention is tough because most firms have a large number of customers and can't afford to devote much time to each of them. The costs would be too great, outweighing the additional revenue. However, if a corporation could forecast which customers are likely to leave ahead of time, it could focus customer retention efforts only on these "high risk" clients. The ultimate goal is to expand its coverage area and retrieve more customers loyalty. The core to succeed in this market lies in the customer itself.
+ 
+Customer churn is a critical metric because it is much less expensive to retain existing customers than it is to acquire new customers.
+ 
+To reduce customer churn, telecom companies need to predict which customers are at high risk of churn.
+ 
+This app uses telco customer churn data and aims at:
+ 
+1. Developing numerical and graphical summaries,
+2. Applying machine learning models to predict churn on individual customer basis
+3. Analising the performance of diiferent model types.
+ 
+Through this interactive user friendly app, users can choose the variables of their interest, can check graphical and numerical summaries of given variables and run a user selected model with varoiables of interest to predict indivisual customer churn.
+---
+title: "About project"
+
+output: 
+  html_document:
+    theme: flatly
+    highlight: pygments
+    number_sections: false
+    self_contained: true
+    lib_dir: libs
+    fig_caption: true
+    toc: false
+    toc_float: false
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE)
+```
+
+![churn](custChurn.jpeg)
+* downloaded from https://www.displayr.com
+
+## The purpose of this app
+ 
+The customer churn or customer attrition refers to loss of customers or subscribers for any reason at all.
+It occurs when customers or subscibers stop doing bussiness with company or service.
+ 
+Customers in the telecom industry can choose from a variety of service providers and actively switch from one to the next. The telecommunications business has an annual churn rate of 15-25 percent in this highly competitive market.
+ 
+Individualized customer retention is tough because most firms have a large number of customers and can't afford to devote much time to each of them. The costs would be too great, outweighing the additional revenue. However, if a corporation could forecast which customers are likely to leave ahead of time, it could focus customer retention efforts only on these "high risk" clients. The ultimate goal is to expand its coverage area and retrieve more customers loyalty. The core to succeed in this market lies in the customer itself.
+ 
+Customer churn is a critical metric because it is much less expensive to retain existing customers than it is to acquire new customers.
+ 
+To reduce customer churn, telecom companies need to predict which customers are at high risk of churn.
+ 
+This app uses telco customer churn data and aims at:
+ 
+1. Developing numerical and graphical summaries,
+2. Applying machine learning models to predict churn on individual customer basis
+3. Analising the performance of diiferent model types.
+ 
+Through this interactive user friendly app, users can choose the variables of their interest, can check graphical and numerical summaries of given variables and run a user selected model with varoiables of interest to predict indivisual customer churn.
+
+ 
+## A brief explanation of this dataset:
+ 
+ 
+The data set for this classification problem is taken from Kaggle and stems from the IBM sample data set collection (https://www.kaggle.com/blastchar/telco-customer-churn).
+ 
+Each row represents a customer; each column contains the customer???s attributes described in the column Metadata.
+ 
+The data set includes information about:
+ 
+Customers who left within the last month ??? the column is called Churn.It is our categorical response variable
+ 
+Services that each customer has signed up for ??? phone, multiple lines, internet, online security, online backup, device protection, tech support, and streaming TV and movies
+ 
+Customer account information ??? how long they???ve been a customer, contract, payment method, paperless billing, monthly charges, and total charges
+ 
+Demographic info about customers ??? gender, age range, and if they have partners and dependents
+
+ 
+## Tell the user the purpose of each tab (page) of the app
+ 
+Data page
+ 
+This page is designed in such a way that user not only will able to scroll through the data set but also can able to select the rows and columns of interests.In addition to that user will be able to download and save the subsetted data (in a csv file.)
+ 
+ 
+Data exploration page
+ 
+Data exploration page displays graphical and numerical summaries.The user can select the type of variable that is categorical or numeric.Categorical variable graphical summary interchageably displys a bar plot and a box plot for selected variable.Numerical variable graphical summary interchangeably displays a density plot and a histogram for selected variable.Numeric summaries display two way contingency tables for categorical variables,and five number summary for numeric variables.
+ 
+ 
+Modeling page
+ 
+Modelling page uses three subtabs 1)Modeling info tab 2) Model fitting tab 3) Prediction tab
+ 
+Modeling info tab - It discusses benefits and drawbacks of the three models that are used to fit on the telco customer churn data.
+ 
+1. Generalised linear model with logit link
+2. Classification tree model
+3. Random forest model
+ 
+Model fitting tab - In this tab user will be given the ability to spit the dataset into test set and train set.In addition, user can select the proportion of the data that will go in each sets.
+User will have functionality to choose the variables, select the model and also to apply cross validation where it is required.User can fit the given three models on train and test data sets and calculate the fit statistics.
+ 
+Prediction tab - on this page user will be able to select the model to predict the reponse for indivisual customer.
+
+## Packages used
+
+
+library(shiny)
+library(tidyverse)
+library(kableExtra)
+library(DT)
+library(plotly)
+library(rpart)
+library(randomForest)
+library(caret)
+library(party)
+library(shinybusy)
+library(tree)
+
+
+## Code to install Packages
+
+installPackages <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    sapply(pkg, require, character.only = TRUE)
+}
+
+packages <- c("shiny", "tidyverse", "kableExtra", "DT", "plotly", "rpart","randomForest","caret","party","shinybusy","tree")
+installPackages(packages)
+
+
+## Code to run the project in GitHub
+
+
+shiny::runGitHub('Finalproject', username = "Rashmi1979", ref = "main",
+  subdir = NULL, port = NULL,
+  launch.browser = getOption("shiny.launch.browser", interactive()))
+
+
+
+
