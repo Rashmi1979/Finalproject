@@ -43,6 +43,7 @@ Through this interactive user friendly app, users can choose the variables of th
 
 ## Code to install Packages
 
+```
 installPackages <- function(pkg){
     new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
     if (length(new.pkg)) 
@@ -52,7 +53,7 @@ installPackages <- function(pkg){
 
 packages <- c("shiny", "tidyverse", "kableExtra", "DT", "plotly", "rpart","randomForest","caret","party","shinybusy","tree")
 installPackages(packages)
-
+```
 
 ## Code to run the project in GitHub
 

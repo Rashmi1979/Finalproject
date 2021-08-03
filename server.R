@@ -223,6 +223,9 @@ shinyServer(function(input, output,session) {
     })
     
   })
+  output$doc <- renderUI(
+    source('ModelingInfo.R', local = TRUE))
+  
   
   
 })
@@ -237,7 +240,5 @@ shinyServer(function(input, output,session) {
     
     
     
-    #output$doc <- renderUI(
-  #    source('ui2.R', local = TRUE))
- # output$test <- renderUI( paste0('test'))
+ 
 
