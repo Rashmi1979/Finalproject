@@ -8,6 +8,9 @@ library(rpart)
 library(randomForest)
 library(caret)
 library(party)
+library(shinybusy)
+library(tree)
+
 
 
 # Define server logic required to draw a histogram
@@ -107,8 +110,6 @@ shinyServer(function(input, output,session) {
   
   
   observeEvent(input$runModels, {
-    
-    
     set.seed(123)  
     modelData <- churnData %>% select(input$predGroup)
     modelData = modelData %>%  mutate_if(is.character,as.factor)
@@ -134,7 +135,7 @@ shinyServer(function(input, output,session) {
     output$glmSummary <- renderPrint({summary(glmFit)})
     output$glmRMSE <- renderText({paste0("Misclassification Rate: ", glmMC)})
     
-  
+    
   
     # Classification tree
     trFit <- ctree(formula = Churn ~ ., data=churnDataTrain)
@@ -160,12 +161,68 @@ shinyServer(function(input, output,session) {
     rfMC <- 1 - sum(diag(rfCM$table)/sum(rfCM$table))
     
     output$rfSummary <- renderPrint({summary(rfFit)})
-    output$rfRMSE <- renderText({paste0("Misclassification Rate: ", rfMC)})
+    output$rfRMSE <- renderText({ paste0("Misclassification Rate: ", rfMC)})
     
-    
-  
   })
   
+  output$predictorValue <- renderText({ paste0(input$predValueGroup,sep=',') })
+  
+  observeEvent(input$runPred, {
+    set.seed(123)  
+    modelDataP <- churnData %>% select("tenure","InternetService","PaymentMethod","Contract","PaperlessBilling","TotalCharges","Churn")
+    modelDataP = modelDataP %>%  mutate_if(is.character,as.factor)
+  
+      
+    #create the train and test datasets
+    train <- sample(1:nrow(modelDataP), size = nrow(modelDataP)*0.7)
+    test <- dplyr::setdiff(1:nrow(modelDataP), train)
+    churnDataTrainP <- modelDataP[train, ]
+    churnDataTestP <- modelDataP[test, ]
+    
+    churnDataTestP <- churnDataTestP[1,]
+    
+  
+    churnDataTestP$tenure <- as.numeric(input$tenure)
+    churnDataTestP$InternetService <- input$iservice
+    churnDataTestP$PaymentMethod <- input$pm
+    churnDataTestP$Contract <- input$cont
+    churnDataTestP$PaperlessBilling <- input$plb
+    churnDataTestP$TotalCharges <- as.numeric(input$tc)
+    
+    churnDataTestP = churnDataTestP %>%  mutate_if(is.character,as.factor)
+    
+    if(input$predictions =="glm"){
+      fitP <- train(Churn ~ ., data=churnDataTrainP, method= "glm", family = "binomial",
+                     preProcess=c("center","scale"), 
+                     trControl = trainControl(method="cv", number= input$cv))
+    }
+    else if (input$predictions =="ct") {
+      
+      fitP <- tree(formula = Churn ~ ., data=churnDataTrainP)
+    }     
+    else {
+      fitP <- train(Churn ~ ., data=churnDataTrainP, method= "rf",
+                     trControl = trainControl(method="cv", number= 2),
+                     tuneGrid = data.frame(mtry = 1:2))
+      
+    }                  
+    predP <- predict(fitP, newdata = dplyr::select(churnDataTestP,-Churn))
+                       
+    
+    
+    output$finalPredicton <- renderText({
+      
+      if(predP ==1)
+      {
+        return("Yes")
+      }
+      else
+      {
+        return("No")
+      }
+    })
+    
+  })
   
   
 })

@@ -160,11 +160,25 @@ ui <- navbarPage(
             fluidPage(
               sidebarLayout(
                 sidebarPanel(
-                  selectInput("predictions", "Select Model ", choices=c("Generlized Linear Model","Classification Tree","Random Forest")),
+                  selectInput("predictions", "Select Model ", choices=c("Generlized Linear Model"="glm","Classification Tree"="ct","Random Forest"="rf")),
                   width = 3
                 ),
                 mainPanel(
+                  h3("Model Prediction:"),
+                 
+                  hr(style="1px solid #000000"),
+                  textInput("tenure", "Tenure", value="34"),
+                  textInput("iservice", "InternetService", value="DSL"),
+                  textInput("pm", "PaymentMethod",value="Electronic check"),
+                  textInput("cont", "Contract",value="One year"),
+                  textInput("plb", "PaperlessBilling",value="Yes"),
+                  textInput("tc", "TotalCharges",value="1840.75"),
+                  actionButton("runPred","Run Prediction"),
                   
+                  hr(style="1px solid #000000"),
+                  h4("Predicted value: "),
+                  textOutput("finalPredicton"),
+                  hr(style="1px solid #000000")
                 )
               )
             )
