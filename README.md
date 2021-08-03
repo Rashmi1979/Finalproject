@@ -28,17 +28,17 @@ Through this interactive user friendly app, users can choose the variables of th
 ## Packages used
 
 
-library(shiny)
-library(tidyverse)
-library(kableExtra)
-library(DT)
-library(plotly)
-library(rpart)
-library(randomForest)
-library(caret)
-library(party)
-library(shinybusy)
-library(tree)
+* library(shiny)
+* library(tidyverse)
+* library(kableExtra)
+* library(DT)
+* library(plotly)
+* library(rpart)
+* library(randomForest)
+* library(caret)
+* library(party)
+* library(shinybusy)
+* library(tree)
 
 
 ## Code to install Packages
