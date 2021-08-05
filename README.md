@@ -39,6 +39,8 @@ Through this interactive user friendly app, users can choose the variables of th
 * library(party)
 * library(shinybusy)
 * library(tree)
+* library(shinyjs)
+* library(shinythemes)
 
 
 ## Code to install Packages
@@ -51,7 +53,7 @@ installPackages <- function(pkg){
     sapply(pkg, require, character.only = TRUE)
 }
 
-packages <- c("shiny", "tidyverse", "kableExtra", "DT", "plotly", "rpart","randomForest","caret","party","shinybusy","tree")
+packages <- c("shiny", "tidyverse", "kableExtra", "DT", "plotly", "rpart","randomForest","caret","party","shinybusy","tree","shinyjs","shinythemes")
 installPackages(packages)
 ```
 
